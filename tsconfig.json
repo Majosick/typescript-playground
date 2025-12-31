@@ -8,7 +8,7 @@
     // Environment Settings
     // See also https://aka.ms/tsconfig/module
     "module": "commonjs",
-    "target": "es2016",
+    "target": "es2020",
     "types": [],
     // For nodejs:
     // "lib": ["esnext"],
@@ -25,21 +25,24 @@
     "exactOptionalPropertyTypes": true,
 
     // Style Options
-    // "noImplicitReturns": true,
+     "noImplicitReturns": true,
     // "noImplicitOverride": true,
-    // "noUnusedLocals": true,
-    // "noUnusedParameters": true,
+     "noUnusedLocals": true,
+     "noUnusedParameters": true,
     // "noFallthroughCasesInSwitch": true,
     // "noPropertyAccessFromIndexSignature": true,
 
     // Recommended Options
     "strict": true,
+    "noImplicitAny": true,
     "jsx": "react-jsx",
-    "verbatimModuleSyntax": true,
-    "isolatedModules": true,
+    "verbatimModuleSyntax": false,
+    //"preserveConstEnums": false,
+    "isolatedModules": false,
     "noUncheckedSideEffectImports": true,
     "moduleDetection": "force",
     "skipLibCheck": true,
+
     "noEmitOnError": true
   }
 }
