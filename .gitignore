@@ -1,0 +1,4 @@
+# .gitignore
+# Temporary commit on main to be rebased onto rebaseTest
+/dist
+/node_modules
