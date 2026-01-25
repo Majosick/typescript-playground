@@ -164,6 +164,7 @@
 
 
 
+
 //optional chaining
 // type Customer = {
 //     birthday?: Date
