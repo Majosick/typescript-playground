@@ -39,8 +39,7 @@ test.describe('Desktop tests', () => {
     const userPassword = 'lalalala';
     const topupReceiver = '500 xxx xxx';
     const topupAmount = '100';
-    const expectedMessage =
-      'Doładowanie wykonane! 100,00PLN na numer 500 xxx xxx';
+    const expectedMessage = `Doładowanie wykonane! ${topupAmount},00PLN na numer ${topupReceiver}`;
 
     // Act
     await page.goto(url);

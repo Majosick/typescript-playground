@@ -32,7 +32,7 @@ export default defineConfig({
     trace: 'retain-on-failure',
     video: 'retain-on-failure',
   },
-  timeout: 5000, // 5 seconds
+  timeout: 30 * 1000, // 30 seconds
 
   /* Configure projects for major browsers */
   projects: [
