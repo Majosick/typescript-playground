@@ -52,6 +52,8 @@ test.describe('User login to Demobank', () => {
 
     // Assert
     await expect(page.getByTestId('login-button')).toBeDisabled();
-    await expect(page.getByTestId('error-login-password')).toHaveText(errorMessagePassword);
+    await expect(page.getByTestId('error-login-password')).toHaveText(
+      errorMessagePassword,
+    );
   });
 });
