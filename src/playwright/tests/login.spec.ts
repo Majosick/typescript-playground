@@ -18,7 +18,9 @@ test.describe('User login to Demobank', () => {
     await expect(page.getByTestId('user-name')).toHaveText(expectedUserName);
   });
 
-  test('unsuccessful login with too short login and password', async ({ page }) => {
+  test('unsuccessful login with too short login and password', async ({
+    page,
+  }) => {
     // Arrance
     const url = 'https://demo-bank.vercel.app/';
     const shortUserID = 'iksdee';
@@ -31,7 +33,9 @@ test.describe('User login to Demobank', () => {
 
     // Assert
     await expect(page.getByTestId('login-button')).toBeDisabled();
-    await expect(page.getByTestId('error-login-id')).toHaveText('identyfikator ma min. 8 znaków');
+    await expect(page.getByTestId('error-login-id')).toHaveText(
+      'identyfikator ma min. 8 znaków',
+    );
   });
 
   test('unsuccessful login with too short password', async ({ page }) => {
@@ -48,6 +52,8 @@ test.describe('User login to Demobank', () => {
 
     // Assert
     await expect(page.getByTestId('login-button')).toBeDisabled();
-    await expect(page.getByTestId('error-login-password')).toHaveText('hasło ma min. 8 znaków');
+    await expect(page.getByTestId('error-login-password')).toHaveText(
+      'hasło ma min. 8 znaków',
+    );
   });
-})
+});
