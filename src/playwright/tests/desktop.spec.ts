@@ -1,15 +1,17 @@
 import { test, expect } from '@playwright/test';
 
 test.describe('Desktop tests', () => {
-  const userID = 'lalalala';
-  const userPassword = 'password';
   test.beforeEach(async ({ page }) => {
+    const userID = 'lalalala';
+    const userPassword = 'password';
     const baseURL = 'https://demo-bank.vercel.app/';
+    
     await page.goto(baseURL);
     await page.getByTestId('login-input').fill(userID);
     await page.getByTestId('password-input').fill(userPassword);
     await page.getByTestId('login-button').click();
   });
+
   test('quick transfer with payment data', async ({ page }) => {
     // Arrange
     const receiverOption = '2';

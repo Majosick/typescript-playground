@@ -4,6 +4,7 @@ test.describe('User login to Demobank', () => {
   const shortPassword = 'haowww';
   const errorMessageID = 'identyfikator ma min. 8 znaków';
   const errorMessagePassword = 'hasło ma min. 8 znaków';
+  
   test.beforeEach(async ({ page }) => {
     const baseURL = 'https://demo-bank.vercel.app/';
     await page.goto(baseURL);
