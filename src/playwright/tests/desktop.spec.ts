@@ -36,15 +36,14 @@ test.describe('Desktop tests', () => {
 
   test(`successfuly mobile top-up`, async ({ page }) => {
     // Arrange
-    const topupReceiver = '500 xxx xxx';
-    const topupAmount = '100';
-    const expectedMessage = `Doładowanie wykonane! ${topupAmount},00PLN na numer ${topupReceiver}`;
+    const topUpReceiver = '500 xxx xxx';
+    const topUpAmount = '100';
+    const expectedMessage = `Doładowanie wykonane! ${topUpAmount},00PLN na numer ${topUpReceiver}`;
 
     // Act
-    await page.locator('#widget_1_topup_receiver').selectOption(topupReceiver);
-    await page.locator('#widget_1_topup_amount').fill(topupAmount);
+    await page.locator('#widget_1_topup_receiver').selectOption(topUpReceiver);
+    await page.locator('#widget_1_topup_amount').fill(topUpAmount);
     await page.locator('#uniform-widget_1_topup_agreement span').click();
-    await page.waitForTimeout(500); // 0.5 second pause
     await page.getByRole('button', { name: 'doładuj telefon' }).click();
 
     await expect(page.getByText('Doładowanie wykonane!Kwota:')).toBeVisible();
@@ -52,5 +51,28 @@ test.describe('Desktop tests', () => {
 
     // Assert
     await expect(page.locator('#show_messages')).toHaveText(expectedMessage);
+  });
+
+  test(`correct balance after successful mobile top-up`, async ({
+    page,
+  }) => {
+    // Arrange
+    const topUpReceiver = '500 xxx xxx';
+    const topUpAmount = '100';
+    const balanceBeforeTopUp = await page.locator('#money_value').innerText();
+    const expectedBalanceAfterTopUp =
+      Number(balanceBeforeTopUp) - Number(topUpAmount);
+
+    // Act
+    await page.locator('#widget_1_topup_receiver').selectOption(topUpReceiver);
+    await page.locator('#widget_1_topup_amount').fill(topUpAmount);
+    await page.locator('#uniform-widget_1_topup_agreement span').click();
+    await page.getByRole('button', { name: 'doładuj telefon' }).click();
+    await page.getByTestId('close-button').click();
+
+    // Assert
+    await expect(page.locator('#money_value')).toHaveText(
+      `${expectedBalanceAfterTopUp}`,
+    );
   });
 });

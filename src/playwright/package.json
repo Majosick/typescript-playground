@@ -3,13 +3,19 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "test": "npx playwright test",
+    "test:headed": "npx playwright test --headed",
+    "debug": "npx playwright test",
+    "test:desktop": "npm run test tests/desktop.spec.ts",
+    "test:desktop:headed": "npm run test tests/desktop.spec.ts -- --headed"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "type": "commonjs",
   "devDependencies": {
-    "@playwright/test": "^1.58.0",
+    "@playwright/test": "^1.58.2",
     "@types/node": "^25.0.10",
     "prettier": "3.8.1"
   }
