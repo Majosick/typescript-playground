@@ -1,4 +1,5 @@
 import { test, expect } from '@playwright/test';
+import { loginData } from '../test-data/login.data';
 
 test.describe('User login to Demobank', () => {
   const shortPassword = 'haowww';
@@ -11,13 +12,11 @@ test.describe('User login to Demobank', () => {
 
   test('successful login with correct credentials', async ({ page }) => {
     // Arrance
-    const userID = 'iksdeela';
-    const userPassword = 'haslowww';
     const expectedUserName = 'Jan Demobankowy';
 
     // Act
-    await page.getByTestId('login-input').fill(userID);
-    await page.getByTestId('password-input').fill(userPassword);
+    await page.getByTestId('login-input').fill(loginData.userID);
+    await page.getByTestId('password-input').fill(loginData.userPassword);
     await page.getByTestId('login-button').click();
 
     // Assert
@@ -44,7 +43,7 @@ test.describe('User login to Demobank', () => {
     const userID = 'iksdeaxd';
 
     // Act
-    await page.getByTestId('login-input').fill(userID);
+    await page.getByTestId('login-input').fill(loginData.userID);
     await page.getByTestId('password-input').fill(shortPassword);
     await page.getByTestId('password-input').blur(); // blur removes focus from the element, which triggers validation
 
