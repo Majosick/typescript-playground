@@ -1,11 +1,17 @@
 import { test, expect } from '@playwright/test';
 
 test.describe('Desktop tests', () => {
+  const userID = 'lalalala';
+  const userPassword = 'password';
+  test.beforeEach(async ({ page }) => {
+    const baseURL = 'https://demo-bank.vercel.app/';
+    await page.goto(baseURL);
+    await page.getByTestId('login-input').fill(userID);
+    await page.getByTestId('password-input').fill(userPassword);
+    await page.getByTestId('login-button').click();
+  });
   test('quick transfer with payment data', async ({ page }) => {
     // Arrange
-    const url = 'https://demo-bank.vercel.app/';
-    const userID = 'lalalala';
-    const userPassword = 'password';
     const receiverOption = '2';
     const transferAmount = '666';
     const transferTitle = 'pizza';
@@ -13,11 +19,6 @@ test.describe('Desktop tests', () => {
     const expectedMessage = `Przelew wykonany! ${receiverName} - ${transferAmount},00PLN - ${transferTitle}`;
 
     // Act
-    await page.goto(url);
-    await page.getByTestId('login-input').fill(userID);
-    await page.getByTestId('password-input').fill(userPassword);
-    await page.getByTestId('login-button').click();
-
     await page
       .locator('#widget_1_transfer_receiver')
       .selectOption(receiverOption);
@@ -34,19 +35,11 @@ test.describe('Desktop tests', () => {
 
   test(`successfuly mobile top-up`, async ({ page }) => {
     // Arrange
-    const url = 'https://demo-bank.vercel.app/';
-    const userID = 'lalalala';
-    const userPassword = 'lalalala';
     const topupReceiver = '500 xxx xxx';
     const topupAmount = '100';
     const expectedMessage = `Doładowanie wykonane! ${topupAmount},00PLN na numer ${topupReceiver}`;
 
     // Act
-    await page.goto(url);
-    await page.getByTestId('login-input').fill(userID);
-    await page.getByTestId('password-input').fill(userPassword);
-    await page.getByTestId('login-button').click();
-
     await page.locator('#widget_1_topup_receiver').selectOption(topupReceiver);
     await page.locator('#widget_1_topup_amount').fill(topupAmount);
     await page.locator('#uniform-widget_1_topup_agreement span').click();
