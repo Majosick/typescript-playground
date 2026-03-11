@@ -1,5 +1,7 @@
 import { test, expect } from '@playwright/test';
 import { loginData } from '../test-data/login.data';
+import LoginPage from '../pages/login.page';
+import { log } from 'node:console';
 
 test.describe('User login to Demobank', () => {
   const shortPassword = 'haowww';
@@ -15,9 +17,10 @@ test.describe('User login to Demobank', () => {
     const expectedUserName = 'Jan Demobankowy';
 
     // Act
-    await page.getByTestId('login-input').fill(loginData.userID);
-    await page.getByTestId('password-input').fill(loginData.userPassword);
-    await page.getByTestId('login-button').click();
+    const loginPage = new LoginPage(page);
+    await loginPage.fillLoginInput(loginData.userID);
+    await loginPage.fillPasswordInput(loginData.userPassword);
+    await loginPage.clickLoginButton();
 
     // Assert
     await expect(page.getByTestId('user-name')).toHaveText(expectedUserName);
