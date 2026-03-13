@@ -1,21 +1,20 @@
 import { Page, Locator } from '@playwright/test';
 
 export class LoginPage {
-  private loginInput: Locator;
-  private passwordInput: Locator;
-  private loginButton: Locator;
-  private userName: Locator;
-  private errorLoginId: Locator;
-  private errorLoginPassword: Locator;
+  loginInput: Locator;
+  passwordInput: Locator;
+  loginButton: Locator;
+  userName: Locator;
+  errorLoginId: Locator;
+  errorLoginPassword: Locator;
 
   constructor(private page: Page) {
-    this.page = page;
-    this.loginInput = page.getByTestId('login-input');
-    this.passwordInput = page.getByTestId('password-input');
-    this.loginButton = page.getByTestId('login-button');
-    this.userName = page.getByTestId('user-name');
-    this.errorLoginId = page.getByTestId('error-login-id');
-    this.errorLoginPassword = page.getByTestId('error-login-password');
+    this.loginInput = this.page.getByTestId('login-input');
+    this.passwordInput = this.page.getByTestId('password-input');
+    this.loginButton = this.page.getByTestId('login-button');
+    this.userName = this.page.getByTestId('user-name');
+    this.errorLoginId = this.page.getByTestId('error-login-id');
+    this.errorLoginPassword = this.page.getByTestId('error-login-password');
   }
 
   async fillLoginInput(userID: string): Promise<void> {
@@ -39,22 +38,4 @@ export class LoginPage {
     await this.fillPasswordInput(password);
     await this.clickLoginButton();
   }
-
-  async getUserNameText(): Promise<string> {
-    return (await this.userName.textContent()) || '';
-  }
-
-  async isLoginButtonDisabled(): Promise<boolean> {
-    return await this.loginButton.isDisabled();
-  }
-
-  async getErrorLoginIdText(): Promise<string> {
-    return (await this.errorLoginId.textContent()) || '';
-  }
-
-  async getErrorLoginPasswordText(): Promise<string> {
-    return (await this.errorLoginPassword.textContent()) || '';
-  }
 }
-
-export default LoginPage;

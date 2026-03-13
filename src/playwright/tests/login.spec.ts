@@ -1,7 +1,6 @@
 import { test, expect } from '@playwright/test';
 import { loginData } from '../test-data/login.data';
-import LoginPage from '../pages/login.page';
-import { log } from 'node:console';
+import { LoginPage } from '../pages/login.page';
 
 test.describe('User login to Demobank', () => {
   const shortPassword = 'haowww';
@@ -13,14 +12,12 @@ test.describe('User login to Demobank', () => {
   });
 
   test('successful login with correct credentials', async ({ page }) => {
-    // Arrance
+    // Arrange
     const expectedUserName = 'Jan Demobankowy';
 
     // Act
     const loginPage = new LoginPage(page);
-    await loginPage.fillLoginInput(loginData.userID);
-    await loginPage.fillPasswordInput(loginData.userPassword);
-    await loginPage.clickLoginButton();
+    await loginPage.login(loginData.userID, loginData.userPassword);
 
     // Assert
     await expect(page.getByTestId('user-name')).toHaveText(expectedUserName);
@@ -29,31 +26,27 @@ test.describe('User login to Demobank', () => {
   test('unsuccessful login with too short login and password', async ({
     page,
   }) => {
-    // Arrance
+    // Arrange
     const shortUserID = 'iksdee';
 
     // Act
-    await page.getByTestId('login-input').fill(shortUserID);
-    await page.getByTestId('password-input').fill(shortPassword);
-
-    // Assert
-    await expect(page.getByTestId('login-button')).toBeDisabled();
-    await expect(page.getByTestId('error-login-id')).toHaveText(errorMessageID);
+    const loginPage = new LoginPage(page);
+    await loginPage.fillLoginInput(shortUserID);
+    await loginPage.fillPasswordInput(shortPassword);
+    // // Assert
+    await expect(loginPage.loginButton).toBeDisabled();
+    await expect(loginPage.errorLoginId).toHaveText(errorMessageID);
   });
 
   test('unsuccessful login with too short password', async ({ page }) => {
-    // Arrange
-    const userID = 'iksdeaxd';
-
     // Act
-    await page.getByTestId('login-input').fill(loginData.userID);
-    await page.getByTestId('password-input').fill(shortPassword);
-    await page.getByTestId('password-input').blur(); // blur removes focus from the element, which triggers validation
+    const loginPage = new LoginPage(page);
+    await loginPage.fillLoginInput(loginData.userID);
+    await loginPage.fillPasswordInput(shortPassword);
+    await loginPage.blurPasswordInput(); // blur removes focus from the element, which triggers validation
 
     // Assert
-    await expect(page.getByTestId('login-button')).toBeDisabled();
-    await expect(page.getByTestId('error-login-password')).toHaveText(
-      errorMessagePassword,
-    );
+    await expect(loginPage.loginButton).toBeDisabled();
+    await expect(loginPage.errorLoginPassword).toHaveText(errorMessagePassword);
   });
 });
