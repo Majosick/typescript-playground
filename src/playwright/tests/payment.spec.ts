@@ -1,6 +1,7 @@
 import { test, expect } from '@playwright/test';
 import { loginData } from '../test-data/login.data';
 import { LoginPage } from '../pages/login.page';
+import { SideMenu } from '../components/side-menu.component';
 import { PaymentPage } from '../pages/payment.page';
 
 test.describe('Payment tests', () => {
@@ -12,8 +13,8 @@ test.describe('Payment tests', () => {
     const loginPage = new LoginPage(page);
     await loginPage.login(userID, userPassword);
 
-    const paymentPage = new PaymentPage(page);
-    await paymentPage.navigateTo();
+    const sideMenu = new SideMenu(page);
+    await sideMenu.goToPayment();
   });
 
   test('Simple payment test', async ({ page }) => {

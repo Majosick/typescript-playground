@@ -1,10 +1,10 @@
 import { test, expect } from '@playwright/test';
 import { loginData } from '../test-data/login.data';
 import { LoginPage } from '../pages/login.page';
-import { PaymentPage } from '../pages/payment.page';
 import { DesktopPage } from '../pages/desktop.page';
 
 test.describe('User login to Demobank', () => {
+  const userID = loginData.userID;
   const shortPassword = 'haowww';
   const errorMessageID = 'identyfikator ma min. 8 znaków';
   const errorMessagePassword = 'hasło ma min. 8 znaków';
@@ -26,7 +26,7 @@ test.describe('User login to Demobank', () => {
     await expect(desktopPage.userName).toHaveText(expectedUserName);
   });
 
-  test('unsuccessful login with too short login and password', async ({
+  test('unsuccessful login with too short login and too short password', async ({
     page,
   }) => {
     // Arrange
@@ -41,10 +41,12 @@ test.describe('User login to Demobank', () => {
     await expect(loginPage.errorLoginId).toHaveText(errorMessageID);
   });
 
-  test('unsuccessful login with too short password', async ({ page }) => {
+  test('unsuccessful login with correct login and too short password', async ({
+    page,
+  }) => {
     // Act
     const loginPage = new LoginPage(page);
-    await loginPage.fillLoginInput(loginData.userID);
+    await loginPage.fillLoginInput(userID);
     await loginPage.fillPasswordInput(shortPassword);
     await loginPage.blurPasswordInput(); // blur removes focus from the element, which triggers validation
 

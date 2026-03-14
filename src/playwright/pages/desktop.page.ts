@@ -1,4 +1,5 @@
 import { Page, Locator } from '@playwright/test';
+import { SideMenu } from '../components/side-menu.component';
 
 export class DesktopPage {
   transferReceiverSelect: Locator;
@@ -13,8 +14,10 @@ export class DesktopPage {
   messagesText: Locator;
   balanceValue: Locator;
   userName: Locator;
+  sideMenu: SideMenu;
 
   constructor(private page: Page) {
+    this.sideMenu = new SideMenu(this.page);
     this.transferReceiverSelect = this.page.locator(
       '#widget_1_transfer_receiver',
     );
