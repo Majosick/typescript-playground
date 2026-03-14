@@ -12,6 +12,7 @@ export class DesktopPage {
   closeMessageButton: Locator;
   messagesText: Locator;
   balanceValue: Locator;
+  userName: Locator;
 
   constructor(private page: Page) {
     this.transferReceiverSelect = this.page.locator(
@@ -33,6 +34,7 @@ export class DesktopPage {
     this.closeMessageButton = this.page.getByTestId('close-button');
     this.messagesText = this.page.locator('#show_messages');
     this.balanceValue = this.page.locator('#money_value');
+    this.userName = this.page.getByTestId('user-name');
   }
 
   async makeQuickTransfer(

@@ -1,6 +1,8 @@
 import { test, expect } from '@playwright/test';
 import { loginData } from '../test-data/login.data';
 import { LoginPage } from '../pages/login.page';
+import { PaymentPage } from '../pages/payment.page';
+import { DesktopPage } from '../pages/desktop.page';
 
 test.describe('User login to Demobank', () => {
   const shortPassword = 'haowww';
@@ -20,7 +22,8 @@ test.describe('User login to Demobank', () => {
     await loginPage.login(loginData.userID, loginData.userPassword);
 
     // Assert
-    await expect(page.getByTestId('user-name')).toHaveText(expectedUserName);
+    const desktopPage = new DesktopPage(page);
+    await expect(desktopPage.userName).toHaveText(expectedUserName);
   });
 
   test('unsuccessful login with too short login and password', async ({

@@ -10,7 +10,7 @@ test.describe('Desktop tests', () => {
 
     await page.goto('/');
     const loginPage = new LoginPage(page);
-    await loginPage.login(loginData.userID, loginData.userPassword);
+    await loginPage.login(userID, userPassword);
   });
 
   test('quick transfer with payment data', async ({ page }) => {
