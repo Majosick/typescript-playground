@@ -12,4 +12,3 @@ employees.forEach(emp => {
     if (emp.salary < 20000)
         console.log(`This mf ${emp.name} on position ${emp.position} earns less than 20000 so it\'s ${emp.salary}`);
 })
-//one more rebase experiment
