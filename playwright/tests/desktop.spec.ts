@@ -4,6 +4,8 @@ import { LoginPage } from '../pages/login.page';
 import { DesktopPage } from '../pages/desktop.page';
 
 test.describe('Desktop tests', () => {
+  let desktopPage: DesktopPage;
+
   test.beforeEach(async ({ page }) => {
     const userID = loginData.userID;
     const userPassword = loginData.userPassword;
@@ -11,6 +13,8 @@ test.describe('Desktop tests', () => {
     await page.goto('/');
     const loginPage = new LoginPage(page);
     await loginPage.login(userID, userPassword);
+
+    desktopPage = new DesktopPage(page);
   });
 
   test('quick transfer with payment data', async ({ page }) => {
@@ -20,8 +24,6 @@ test.describe('Desktop tests', () => {
     const transferTitle = 'pizza';
     const receiverName = 'Chuck Demobankowy';
     const expectedMessage = `Przelew wykonany! ${receiverName} - ${transferAmount},00PLN - ${transferTitle}`;
-
-    const desktopPage = new DesktopPage(page);
 
     // Act
     await desktopPage.makeQuickTransfer(
@@ -42,8 +44,6 @@ test.describe('Desktop tests', () => {
     const topUpAmount = '1000';
     const expectedMessage = `Doładowanie wykonane! ${topUpAmount},00PLN na numer ${topUpReceiver}`;
 
-    const desktopPage = new DesktopPage(page);
-
     // Act
     await desktopPage.topUpMobile(topUpReceiver, topUpAmount);
     await expect(page.getByText('Doładowanie wykonane!Kwota:')).toBeVisible();
@@ -58,7 +58,6 @@ test.describe('Desktop tests', () => {
     const topUpReceiver = '500 xxx xxx';
     const topUpAmount = '100';
 
-    const desktopPage = new DesktopPage(page);
     const balanceBeforeTopUp = await desktopPage.getBalanceValue();
     const expectedBalanceAfterTopUp = balanceBeforeTopUp - Number(topUpAmount);
 

@@ -5,6 +5,8 @@ import { SideMenu } from '../components/side-menu.component';
 import { PaymentPage } from '../pages/payment.page';
 
 test.describe('Payment tests', () => {
+  let paymentPage: PaymentPage;
+
   test.beforeEach(async ({ page }) => {
     const userID = loginData.userID;
     const userPassword = loginData.userPassword;
@@ -15,6 +17,8 @@ test.describe('Payment tests', () => {
 
     const sideMenu = new SideMenu(page);
     await sideMenu.goToPayment();
+
+    paymentPage = new PaymentPage(page);
   });
 
   test('Simple payment test', async ({ page }) => {
@@ -23,8 +27,6 @@ test.describe('Payment tests', () => {
     const accountNumber = '12 3456 7890 1234 5678 9012 345678';
     const transferAmount = '222';
     const expectedMessage = `Przelew wykonany! ${transferAmount},00PLN dla ${transferReceiver}`;
-
-    const paymentPage = new PaymentPage(page);
 
     // Act
     await paymentPage.makeTransfer(

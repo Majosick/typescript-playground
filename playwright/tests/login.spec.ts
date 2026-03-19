@@ -9,17 +9,20 @@ test.describe('User login to Demobank', () => {
   const errorMessageID = 'identyfikator ma min. 8 znaków';
   const errorMessagePassword = 'hasło ma min. 8 znaków';
 
+  let loginPage: LoginPage;
+
   test.beforeEach(async ({ page }) => {
     await page.goto('/');
+    loginPage = new LoginPage(page);
   });
 
   test('successful login with correct credentials', async ({ page }) => {
     // Arrange
     const expectedUserName = 'Jan Demobankowy';
+    const userPassword = loginData.userPassword;
 
     // Act
-    const loginPage = new LoginPage(page);
-    await loginPage.login(loginData.userID, loginData.userPassword);
+    await loginPage.login(userID, userPassword);
 
     // Assert
     const desktopPage = new DesktopPage(page);
@@ -33,7 +36,6 @@ test.describe('User login to Demobank', () => {
     const shortUserID = 'iksdee';
 
     // Act
-    const loginPage = new LoginPage(page);
     await loginPage.fillLoginInput(shortUserID);
     await loginPage.fillPasswordInput(shortPassword);
     // // Assert
@@ -45,7 +47,6 @@ test.describe('User login to Demobank', () => {
     page,
   }) => {
     // Act
-    const loginPage = new LoginPage(page);
     await loginPage.fillLoginInput(userID);
     await loginPage.fillPasswordInput(shortPassword);
     await loginPage.blurPasswordInput(); // blur removes focus from the element, which triggers validation
